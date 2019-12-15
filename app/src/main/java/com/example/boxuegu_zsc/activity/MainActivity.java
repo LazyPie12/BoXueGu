@@ -1,8 +1,10 @@
 package com.example.boxuegu_zsc.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.boxuegu_zsc.R;
+import com.example.boxuegu_zsc.view.MyInfoView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tv_back;
     private TextView tv_main_title;
     private RelativeLayout rl_title_bar;
+    private MyInfoView mMyInfoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +174,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 2:
                 // MyInfo
+                if (mMyInfoView == null) {
+                    mMyInfoView = new MyInfoView(this);
+                    mbodyLayout.addView(mMyInfoView.getView());
+                } else {
+                    mMyInfoView.getView();
+                }
+                mMyInfoView.showView();
                 break;
         }
     }
@@ -195,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onKeyDown(keyCode, event);
     }
 
-    // 获取SharedPreferences中的登录状态
+    // 获取SharedPreferences中的登录状态，在MyInfoView中使用
     private boolean readLoginStatus() {
         SharedPreferences sp = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
         boolean isLogin = sp.getBoolean("isLogin", false);
@@ -209,5 +220,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putBoolean("isLogin", false);
         editor.putString("loginUserName", "");
         editor.commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            boolean isLogin = data.getBooleanExtra("isLogin", false);
+            if (isLogin) {
+                clearBottomImageState();
+                selectDisplayView(0);
+            }
+            if (mMyInfoView != null) {
+                mMyInfoView.setLoginParams(isLogin);
+            }
+        }
     }
 }
