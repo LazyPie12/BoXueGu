@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.FindPswActivity"></activity>
+        <activity android:name=".activity.ModifyPswActivity" />
+        <activity android:name=".activity.SettingAcitivity" />
+        <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
