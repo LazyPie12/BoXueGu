@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.boxuegu_zsc.R;
 import com.example.boxuegu_zsc.activity.LoginActivity;
 import com.example.boxuegu_zsc.activity.SettingAcitivity;
+import com.example.boxuegu_zsc.activity.UserInfoActivity;
 import com.example.boxuegu_zsc.utils.AnalysisUtils;
 
 public class MyInfoView {
@@ -50,6 +51,8 @@ public class MyInfoView {
             public void onClick(View v) {
                 if (readLoginStatus()) {
                     // 跳转到个人资料页面
+                    Intent intent = new Intent(mContext, UserInfoActivity.class);
+                    mContext.startActivity(intent);
                 } else {
                     // 跳转到登录页面
                     Intent intent = new Intent(mContext, LoginActivity.class);
