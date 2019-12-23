@@ -1,12 +1,15 @@
 package com.example.boxuegu_zsc.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +27,8 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     private TextView tv_nickName, tv_signature, tv_user_name, tv_sex;
     private RelativeLayout rl_nickName, rl_sex, rl_signature, rl_title_bar;
     private String spUserName;
+    private static final int CHANGE_NICKNAME = 1;
+    private static final int CHANGE_SIGNATURE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +91,24 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                 this.finish();
                 break;
             case R.id.rl_nickName:
+                String name = tv_nickName.getText().toString(); //获取昵称控件上的数据
+                Bundle bdName = new Bundle();
+                bdName.putString("content", name); //传递界面上的昵称数据
+                bdName.putString("title", "昵称");
+                bdName.putInt("flag", 1); //flag传递1时表示是修改昵称
+                enterActivityForResult(ChangeUserInfoActivity.class, CHANGE_NICKNAME, bdName);
                 break;
             case R.id.rl_sex:
                 String sex = tv_sex.getText().toString();
                 setDialog(sex);
                 break;
             case R.id.rl_signature:
+                String signature = tv_signature.getText().toString(); //获取签名控件上的数据
+                Bundle bdSignature = new Bundle();
+                bdSignature.putString("content", signature); //传递界面上的签名数据
+                bdSignature.putString("title", "签名");
+                bdSignature.putInt("flag", 2); //flag传递2时表示是修改签名
+                enterActivityForResult(ChangeUserInfoActivity.class, CHANGE_SIGNATURE, bdSignature);
                 break;
             default:
                 break;
@@ -125,5 +142,45 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     private void setSex(String sex) {
         tv_sex.setText(sex);
         DBUtils.getInstance(UserInfoActivity.this).updateUserInfo("sex", sex, spUserName);
+    }
+
+    // 获取回传数据时需使用的跳转方法，第一个参数to表示需要跳转到的界面，第二个参数requestCode表示一个请求码，第三个参数b表示跳转时传递的数据
+    public void enterActivityForResult(Class<?> to, int requestCode, Bundle b) {
+        Intent i = new Intent(this, to);
+        i.putExtras(b);
+        startActivityForResult(i, requestCode);
+    }
+
+    private String new_info;  // 最新数据
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case CHANGE_NICKNAME://个人资料修改界面回传过来的昵称数据
+                if (data != null) {
+                    new_info = data.getStringExtra("nickName");
+                    if (TextUtils.isEmpty(new_info) || new_info == null) {
+                        return;
+                    }
+                    tv_nickName.setText(new_info);
+                    // 更新数据库中的昵称字段
+                    DBUtils.getInstance(UserInfoActivity.this).updateUserInfo(
+                            "nickName", new_info, spUserName);
+                }
+                break;
+            case CHANGE_SIGNATURE://个人资料修改界面回传过来的昵称数据
+                if (data != null) {
+                    new_info = data.getStringExtra("nickName");
+                    if (TextUtils.isEmpty(new_info) || new_info == null) {
+                        return;
+                    }
+                    tv_nickName.setText(new_info);
+                    // 更新数据库中的昵称字段
+                    DBUtils.getInstance(UserInfoActivity.this).updateUserInfo(
+                            "nickName", new_info, spUserName);
+                }
+                break;
+        }
     }
 }
