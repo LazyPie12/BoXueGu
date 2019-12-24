@@ -19,11 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.boxuegu_zsc.R;
+import com.example.boxuegu_zsc.view.CourseView;
+import com.example.boxuegu_zsc.view.ExercisesView;
 import com.example.boxuegu_zsc.view.MyInfoView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private FrameLayout mbodyLayout;  // 中间内容栏
+    private FrameLayout mBodyLayout;  // 中间内容栏
     private LinearLayout mBottomLayout; // 底部按钮栏
     private View mCourseBtn;
     private View mExercisesBtn;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tv_back;
     private TextView tv_main_title;
     private RelativeLayout rl_title_bar;
+    private ExercisesView mExercisesView;
+    private CourseView mCourseView;
     private MyInfoView mMyInfoView;
 
     @Override
@@ -61,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initBodyLayout() {
-        mbodyLayout = (FrameLayout) findViewById(R.id.main_body);
+        mBodyLayout = (FrameLayout) findViewById(R.id.main_body);
     }
 
     private void initBottomBar() {
@@ -144,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 移除不需要的视图
     private void removeAllView() {
-        for (int i = 0; i < mbodyLayout.getChildCount(); i++) {
-            mbodyLayout.getChildAt(i).setVisibility(View.GONE);
+        for (int i = 0; i < mBodyLayout.getChildCount(); i++) {
+            mBodyLayout.getChildAt(i).setVisibility(View.GONE);
         }
     }
 
@@ -168,15 +172,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (viewIndex) {
             case 0:
                 // Course
+                if (mCourseView == null) {
+                    mCourseView = new CourseView(this);
+                    mBodyLayout.addView(mCourseView.getView());
+                } else {
+                    mCourseView.getView();
+                }
+                mCourseView.showView();
                 break;
             case 1:
                 // Exercises
+                if (mExercisesView == null) {
+                    mExercisesView = new ExercisesView(this);
+                    mBodyLayout.addView(mExercisesView.getView());
+                } else {
+                    mExercisesView.getView();
+                }
+                mExercisesView.showView();
                 break;
             case 2:
                 // MyInfo
                 if (mMyInfoView == null) {
                     mMyInfoView = new MyInfoView(this);
-                    mbodyLayout.addView(mMyInfoView.getView());
+                    mBodyLayout.addView(mMyInfoView.getView());
                 } else {
                     mMyInfoView.getView();
                 }
