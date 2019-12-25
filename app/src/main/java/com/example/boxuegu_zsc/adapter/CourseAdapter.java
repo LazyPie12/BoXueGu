@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.boxuegu_zsc.R;
+import com.example.boxuegu_zsc.activity.VideoListActivity;
 import com.example.boxuegu_zsc.bean.CourseBean;
 
 import java.util.List;
@@ -90,11 +91,11 @@ public class CourseAdapter extends BaseAdapter {
                             @Override
                             public void onClick(View v) {
                                 // 跳转到课程详情界面
-//                                Intent intent = new Intent(mContext,
-//                                        VideoListActivity.class);
-//                                intent.putExtra("id", bean.id);
-//                                intent.putExtra("intro", bean.intro);
-//                                mContext.startActivity(intent);
+                                Intent intent = new Intent(mContext,
+                                        VideoListActivity.class);
+                                intent.putExtra("id", bean.id);
+                                intent.putExtra("intro", bean.intro);
+                                mContext.startActivity(intent);
                             }
                         });
                         break;

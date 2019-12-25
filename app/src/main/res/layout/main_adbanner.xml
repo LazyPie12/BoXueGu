@@ -5,7 +5,7 @@
     android:layout_height="160dp"
     android:background="#eeeeee"
     android:orientation="vertical">
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_advertBanner"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/transparent">
-        <com.boxuegu.view.ViewPagerIndicator
+        <com.example.boxuegu_zsc.view.ViewPagerIndicator
             android:id="@+id/vpi_advert_indicator"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
