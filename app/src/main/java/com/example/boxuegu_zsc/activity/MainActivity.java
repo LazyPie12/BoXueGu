@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_myInfo.setTextColor(Color.parseColor("#666666"));
         iv_course.setImageResource(R.drawable.main_course_icon);
         iv_exercises.setImageResource(R.drawable.main_exercises_icon);
-        iv_course.setImageResource(R.drawable.main_my_icon);
+        iv_myInfo.setImageResource(R.drawable.main_my_icon);
         for (int i = 0; i < mBottomLayout.getChildCount(); i++) {
             mBottomLayout.getChildAt(i).setSelected(false);
         }
